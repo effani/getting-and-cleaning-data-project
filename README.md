@@ -2,32 +2,15 @@
 
 This is the course project for the Coursera course Getting and Cleaning Data.
 
+This project uses data collected from accelerometers for activity tracking. Data were collected on 30 volunteers who performed six activities (walking, walking upstairs, walking downstairs, sitting, standing, and laying down) while wearing a Samsung Galaxy S II smartphone on the waist.
 
+The code in this repository loads the data into R, extracts mean and standard deviation values, tidies the data, and summarizes the values by subject (i.e., volunteer) and activity.
 
-## Notes
-Note that raw data files are not included in the github repo due to large file sizes. The code will not run unless you download the data (linked in instructions below) to a folder called "data".
+Data for this project are available [here](<https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) and more information is available [here](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones).
 
-## Project Instructions
-The purpose of this project is to demonstrate your ability to collect, work with, and clean a data set. The goal is to prepare tidy data that can be used for later analysis. You will be graded by your peers on a series of yes/no questions related to the project. You will be required to submit: 1) a tidy data set as described below, 2) a link to a Github repository with your script for performing the analysis, and 3) a code book that describes the variables, the data, and any transformations or work that you performed to clean up the data called CodeBook.md. You should also include a README.md in the repo with your scripts. This repo explains how all of the scripts work and how they are connected.
+Note that raw data files are not included in the github repo due to large file sizes. The code will not run unless you download the data (linked above) to a folder called "data".
 
-One of the most exciting areas in all of data science right now is wearable computing - see for example [this article](http://www.insideactivitytracking.com/data-science-activity-tracking-and-the-battle-for-the-worlds-top-sports-brand/). Companies like Fitbit, Nike, and Jawbone Up are racing to develop the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained:
-
-<http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones>
-
-Here are the data for the project:
-
-<https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip>
-
-You should create one R script called run_analysis.R that does the following. 
-
-1. Merges the training and the test sets to create one data set.
-
-2. Extracts only the measurements on the mean and standard deviation for each measurement. 
-
-3. Uses descriptive activity names to name the activities in the data set
-
-4. Appropriately labels the data set with descriptive variable names. 
-
-5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-
-Good luck!
+## Files included in this repo:
+1. README.md - this file
+2. run_analysis.R - code to import, tidy, and summarize the data
+3. CodeBook.md - file describing variables in the final tidy dataset

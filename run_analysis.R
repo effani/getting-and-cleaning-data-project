@@ -13,21 +13,47 @@ test_labels <- readLines("data/test/Y_test.txt")
 test_subjects <- readLines("data/test/subject_test.txt")
 
 
-## Change activity labels into a named vector that can be used as a dictionary
+## Get vector of activity labels
+
+# First change activity labels file into a vector that can be used as a 
+# dictionary
 
 names(activity_labels) <- substr(activity_labels, 1, 1)
 activity_labels <- substr(activity_labels, 3, 50)
-# Set end value for substr() at 50
-# this is longer than any of the strings 
+# Set end value for substr() at 50 (longer than any of the strings)
 # to ensure the whole activity name is captured
 
+# make activity labels lowercase and remove underscores
+activity_labels <- tolower(activity_labels)
+activity_labels <- sub("_", " ", activity_labels)
 
-## Remove initial numbers from features list
-## and determine which features contain mean and std
+labels <- c(train_labels, test_labels)
+activity <- activity_labels[labels]
+
+
+## Clean up features list
+# Remove initial numbers
 split_features <- strsplit(features," ")
 features <- sapply(split_features, function(x) x[[2]])
-mean_or_sd <- grepl("mean\\(\\)|std\\(\\)", features)
-rm(split_features)
+
+# Find which features contain mean or standard deviation
+# using regular expression to find "mean()" or "std()" in the feature names
+mean_or_sd <- grep("mean\\(\\)|std\\(\\)", features)
+# This produces a vector of indices where mean or standard deviation features
+# can be found
+
+wanted_features <- features[mean_or_sd]
+
+# Remove parentheses
+wanted_features <- sub("\\(\\)", "", wanted_features)
+
+# Change hyphens to underscores for easier column selection below
+wanted_features <- gsub("-", "_", wanted_features)
+
+
+FFT <- grep("^f", wanted_features)
+wanted_features[FFT] <- sub("(.$)", "\\1_FFT", wanted_features[FFT])
+final_features <- sub("^[t|f]", "", wanted_features)
 
 
 ## Clean and merge data files
@@ -59,33 +85,31 @@ all_data_list <- c(train_list, test_list)
 # save memory by removing partial datasets
 rm(train_data, test_data, train_list, test_list)
 
-# make each element of the list into one row of a dataframe
+# Make each element of the list into one row of a dataframe
 # and set the column names to the features vector (from features.txt)
 all_data <- do.call("rbind", all_data_list)
-# This produces a matrix. Add column names and then use dplyr::as_tibble to 
+
+# Remove all columns except mean and standard deviation
+all_data <- all_data[, mean_or_sd]
+
+# Now we have a matrix. Add column names and then use dplyr::as_tibble to 
 # make a dataframe that will print relatively neatly.
 
-colnames(all_data) <- features
+colnames(all_data) <- final_features
 all_data <- as_tibble(all_data)
 
 
-## Extract only mean and standard deviation for each measurement
-all_data <- all_data[, mean_or_sd]
-
-
 ## Add activity names and subjects to dataframe
+
 subject <- as.integer(c(train_subjects, test_subjects))
 # convert subject to integer to improve sorting
 
-labels <- c(train_labels, test_labels)
-
-all_data <- cbind(all_data, labels, subject) %>%
-  mutate(activity = activity_labels[labels])
+all_data <- cbind(subject, activity, all_data)
 
 
 ## Create summary data table
 data_summary <- all_data %>%
   group_by(subject, activity) %>%
-  summarise(avgtBodyAcc_X = mean(`tBodyAcc-mean()-X`))
+  summarise(across(BodyAcc_mean_X:BodyBodyGyroJerkMag_std_FFT, mean))
 
 

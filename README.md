@@ -12,5 +12,6 @@ Note that raw data files are not included in the github repo due to large file s
 
 ## Files included in this repo:
 1. README.md - this file
-2. run_analysis.R - code to import, tidy, and summarize the data
+2. run_analysis.R - code to import, tidy, and summarize the data, and then write the output to data_summary.txt
 3. CodeBook.md - file describing variables in the final tidy dataset
+4. data_summary.txt - output of run_analysis.R

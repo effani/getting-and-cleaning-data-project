@@ -15,3 +15,8 @@ Note that raw data files are not included in the github repo due to large file s
 2. run_analysis.R - code to import, tidy, and summarize the data, and then write the output to data_summary.txt
 3. CodeBook.md - file describing variables in the final tidy dataset
 4. data_summary.txt - output of run_analysis.R
+
+## Change log
+The original version of this project was submitted for the course on October 8 2025 (commit 0e20a72). As I was grading my peers and waiting for my own submission to be graded, I realized that my solution, though functional, was inelegant and overcomplicated. Sorry to my peers who had to slog through this version to grade it! Thank you for the passing grade, which I'm not convinced I deserved.
+
+Therefore, once grading was complete I came back to implement a simpler, more efficient solution. If for some bizarre reason someone is trying to use my code to solve this problem, I strongly recommend using the latest version, not the version that was submitted for the course.
